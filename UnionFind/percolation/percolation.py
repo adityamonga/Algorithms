@@ -1,7 +1,7 @@
 import os, sys
-import random
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
+import random
 from weighted_quick_union import UnionFind
 
 class Percolation:
@@ -15,7 +15,8 @@ class Percolation:
         self.uf = UnionFind(side**2 + 2)
 
         self.track_open = [False for i in range(side**2 + 2)]
-        self.track_open[0] = True
+        self.track_open[:side+1] = [True for i in range(side+1)]
+        self.track_open[side*(side-1)+1:] = [True for i in range(side+1)]
         self.open_sites = 0
 
         ## Opening and connecting virtual sites
@@ -116,7 +117,7 @@ def display(land):
 
 def main(land):
     while not land.percolates():
-        i, j = (random.randint(1, land.side) for i in range(2))
+        i, j = (random.randint(2, land.side-1) for i in range(2))
         # print(block)
         # breakpoint()
         land.open(i, j)

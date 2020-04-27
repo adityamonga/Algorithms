@@ -29,8 +29,8 @@ class UnionFind:
 
 if __name__ == '__main__':
     uf = UnionFind(10)
-    print(uf.data)
-    print(uf.root(6))
+    # print(uf.data)
+    # print(uf.root(6))
     uf.union(4,3)
-    print(uf.data)
+    # print(uf.data)
     print(uf.connected(4,3))
