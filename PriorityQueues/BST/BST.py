@@ -39,12 +39,47 @@ class BST:
 
     def inorder(self, node):
         keys = []
+        if not node:
+            return keys
+
         if node.left:
             keys += self.inorder(node.left)
         keys.append(node)
         if node.right:
             keys += self.inorder(node.right)
         return keys
+
+    def size(self, node):
+        count = 0
+        if not node:
+            return count
+
+        if node.left:
+            count += self.size(node.left)
+        count += 1
+        if node.right:
+            count += self.size(node.right)
+        return count
+
+    def rank(self, val, floor=False):
+        ## passing Floor=True returns the immediately smaller rank if val does not exist
+        rank = 1
+        node = self.root
+        while node:
+            if val < node.key:
+                node = node.left
+            elif node.key < val:
+                rank += 1 + self.size(node.left)
+                node = node.right
+            else:
+                return rank + self.size(node.left)
+        return rank if floor else None
+
+    def interval(self, low, high):
+        if self.get(high):
+            return 1 + self.rank(high) - self.rank(low, floor=True)
+
+        return self.rank(high, floor=True) - self.rank(low, floor=True)
 
     def findMin(self, node):
         while node.left:
